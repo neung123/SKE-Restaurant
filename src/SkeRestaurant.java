@@ -1,26 +1,26 @@
 import java.util.Scanner;
-public class Main {
-    
+public class SkeRestaurant {
+
     public static Scanner scan = new Scanner(System.in);
     public static int quanCreamyTS = 0,quanSaladC = 0, quanCrispyFishF = 0, quanSpanishO = 0, quanChocoC = 0, quanTropicalF = 0,discount = 100,all;
-    final static int priceCreamyTS = 120,priceSaladC = 90,priceCrispyFishF = 200,priceSpanishO = 250;
+    final static int priceCreamyTS = 120,priceSaladC = 90,priceCrispyFishF = 200,priceSpanishO = 250,priceChocoC = 65,priceTropicalF = 40;
     public static String pay = "";
     public static double input,change;
 
     public static int firstCourse(int choice){
         int quan = 0;
 
-        System.out.printf("1.) Creamy tomato soup\t%5d Baht.\n",priceCreamyTS);
+        System.out.printf("\n1.) Creamy tomato soup\t%5d Baht.\n",priceCreamyTS);
         System.out.printf("2.) Salad with corn\t\t%5d Baht.\n",priceSaladC);
         System.out.println("3.) Total\n4.) Back\n5.) Exit");
-        choice = inputInt("\nEnter your choice: ");
 
-        if(choice<=2) {
-            quan = inputInt("Enter Quantity: ");
-            if(quan<0){quan=0;}
-        }
+        do{
+            choice = inputInt("\nEnter your choice: ");
 
-        while (choice!=4 && choice!=5) {
+            if(choice==1 || choice==2) {
+                quan = inputInt("Enter Quantity: ");
+                if(quan<0){quan=0;}
+            }
             switch (choice) {
                 case 1:
                     quanCreamyTS += quan;
@@ -32,12 +32,7 @@ public class Main {
                     total(3);
                     break;
             }
-            choice = inputInt("\nEnter your choice: ");
-
-            if(choice<=2) {
-                quan = inputInt("Enter Quantity: ");
-            }
-        }
+        }while (choice!=4 && choice!=5);
 
         if(choice==4){ choice = 7; }
         else if(choice==5){choice = 6;}
@@ -48,17 +43,17 @@ public class Main {
     public static int mainCourse(int choice){
         int quan = 0;
 
-        System.out.printf("1.) Crispy fish fillets\t%5d Baht.\n",priceCrispyFishF);
+        System.out.printf("\n1.) Crispy fish fillets\t%5d Baht.\n",priceCrispyFishF);
         System.out.printf("2.) Spanish octopus\t\t%5d Baht.\n",priceSpanishO);
         System.out.println("3.) Total\n4.) Back\n5.) Exit");
-        choice = inputInt("\nEnter your choice: ");
 
-        if(choice<=2) {
-            quan = inputInt("Enter Quantity: ");
-            if(quan<0){quan=0;}
-        }
+        do{
+            choice = inputInt("\nEnter your choice: ");
 
-        while (choice!=4 && choice!=5) {
+            if(choice==1 || choice==2) {
+                quan = inputInt("Enter Quantity: ");
+                if(quan<0){quan=0;}
+            }
             switch (choice) {
                 case 1:
                     quanCrispyFishF += quan;
@@ -70,12 +65,8 @@ public class Main {
                     total(3);
                     break;
             }
-            choice = inputInt("\nEnter your choice: ");
 
-            if(choice<=2) {
-                quan = inputInt("Enter Quantity: ");
-            }
-        }
+        }while (choice!=4 && choice!=5);
 
         if(choice==4){ choice = 7; }
         else if(choice==5){choice = 6;}
@@ -86,37 +77,29 @@ public class Main {
     public static int dessert(int choice){
         int quan = 0;
 
-        System.out.printf("1.) Chocolate custard\t%5d Baht.\n",65);
-        System.out.printf("2.) Tropical fruit\t\t%5d Baht.\n",40);
+        System.out.printf("\n1.) Chocolate custard\t%5d Baht.\n",priceChocoC);
+        System.out.printf("2.) Tropical fruit\t\t%5d Baht.\n",priceTropicalF);
         System.out.println("3.) Total\n4.) Back\n5.) Exit");
-        choice = inputInt("\nEnter your choice: ");
 
-        if(choice<=2) {
-            quan = inputInt("Enter Quantity: ");
-            if(quan<0){quan=0;}
-        }
+        do{
+           choice = inputInt("\nEnter your choice: ");
 
-        while (choice!=4 && choice!=5) {
+            if(choice==1 || choice==2) {
+                quan = inputInt("Enter Quantity: ");
+                if(quan<0){quan=0;}
+            }
             switch (choice) {
                 case 1:
                     quanChocoC += quan;
                     break;
-
                 case 2:
                     quanTropicalF += quan;
                     break;
-
                 case 3:
                     total(3);
                     break;
-
             }
-            choice = inputInt("\nEnter your choice: ");
-
-            if(choice<=2) {
-                quan = inputInt("Enter Quantity: ");
-            }
-        }
+        } while (choice!=4 && choice!=5);
 
         if(choice==4){ choice = 7; }
         else if(choice==5){choice = 6;}
@@ -135,7 +118,7 @@ public class Main {
         if(quanChocoC >0){ System.out.printf("| Chocolate custard\t\t| \t\t%6d  | \t%10d Baht. |\n", quanChocoC, quanChocoC *65); }
         if(quanTropicalF >0){ System.out.printf("| Tropical fruit\t\t| \t\t%6d  | \t%10d Baht. |\n", quanTropicalF, quanTropicalF *40); }
 
-        double all0 = ((quanCreamyTS * 120) + (quanSaladC * 90) + (quanCrispyFishF * 200) + (quanSpanishO * 250) + (quanChocoC * 65) + (quanTropicalF * 40)) * (discount/ 100.0);
+        double all0 = ((quanCreamyTS * priceCreamyTS) + (quanSaladC * priceSaladC) + (quanCrispyFishF * priceCrispyFishF) + (quanSpanishO * priceCrispyFishF) + (quanChocoC * priceChocoC) + (quanTropicalF * priceTropicalF)) * (discount/ 100.0);
         all = (int) all0;
 
         System.out.println("============+===========+===============+====================");
@@ -180,34 +163,34 @@ public class Main {
             System.out.print("What menu do to want to Change? : ");
             String change0 = scan.next();
             String change = change0.toLowerCase();
-            int numchange = inputInt("Remove: ");
+            int numChange = inputInt("Remove: ");
 
             switch (change){
                 case "ct":
-                    quanCreamyTS -= numchange;
+                    quanCreamyTS -= numChange;
                     if(quanCreamyTS<0){quanCreamyTS=0;}
                     break;
                 case "st":
-                    quanSaladC -= numchange;
+                    quanSaladC -= numChange;
                     if(quanSaladC<0){quanSaladC=0;}
                     break;
                 case "cf":
-                    quanCrispyFishF -= numchange;
+                    quanCrispyFishF -= numChange;
                     if(quanCrispyFishF <0){
                         quanCrispyFishF =0;}
                     break;
                 case "so":
-                    quanSpanishO -= numchange;
+                    quanSpanishO -= numChange;
                     if(quanSpanishO <0){
                         quanSpanishO =0;}
                     break;
                 case "cc":
-                    quanChocoC -= numchange;
+                    quanChocoC -= numChange;
                     if(quanChocoC <0){
                         quanChocoC =0;}
                     break;
                 case "tf":
-                    quanTropicalF -= numchange;
+                    quanTropicalF -= numChange;
                     if(quanTropicalF <0){
                         quanTropicalF =0;}
                     break;
@@ -218,9 +201,7 @@ public class Main {
     }
 
     public static void note(int num,double x) {
-
         change -= num*Math.floor(x/num);
-
         if(num*Math.floor(x/num)>0) {
             System.out.printf("%d notes: %.0f\n", num, Math.floor(x / num));
         }
@@ -228,7 +209,6 @@ public class Main {
 
     public static void coin(int num,double x) {
         change -= num*Math.floor(x/num);
-
         if(num*Math.floor(x/num)>0) {
             System.out.printf("%d coins: %.0f\n", num, Math.floor(x / num));
         }
@@ -245,7 +225,6 @@ public class Main {
         }
         while (!pay.equalsIgnoreCase("cc") && !pay.equalsIgnoreCase("c"));
 
-
         if(pay.equalsIgnoreCase("cc")) {
             System.out.println("Pay with credit card : 5% discount");
             discount-=5;
@@ -258,7 +237,6 @@ public class Main {
                 input = scan.nextDouble();
                 change = input - all;
             }while (change<0);
-
             System.out.println("Your change is:");
             note(1000,change);
             note(500,change);
@@ -269,9 +247,24 @@ public class Main {
             coin(5,change);
             coin(2,change);
             coin(1,change);
-
         }
+    }
 
+    public static void checkOrder(){
+        if(((quanCreamyTS*priceCreamyTS)+(quanSaladC*priceSaladC)+(quanCrispyFishF *priceCrispyFishF)+(quanSpanishO *priceSpanishO)+(quanChocoC *priceChocoC)+(quanTropicalF *priceTropicalF))>0) {
+            if(((quanCreamyTS*priceCreamyTS)+(quanSaladC*priceSaladC)+(quanCrispyFishF *priceCrispyFishF)+(quanSpanishO *priceSpanishO)+(quanChocoC *priceChocoC)+(quanTropicalF *priceTropicalF))>=2500){
+                System.out.println("Your orders are more than 2500 Baht. : 10% discount");
+                discount-=10;
+                total(5);
+            }
+            else {
+                total(5);
+            }
+            money();
+        }
+        else {
+            total(5);
+        }
     }
 
     public static int inputInt(String statement){
@@ -282,11 +275,10 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("========= WELCOME TO SKE RESTAURANT =========");
-        System.out.println("1.) First course\n2.) Main course\n3.) Dessert\n4.) Total\n5.) Change menu\n6.) Exit");
-        System.out.print("\nEnter your choice: ");
-        int choice = inputInt("Enter your choice: ");
-
-        while (choice!=6) {
+        int choice = 0;
+        do{
+            System.out.println("\n1.) First course\n2.) Main course\n3.) Dessert\n4.) Total\n5.) Change menu\n6.) Exit");
+            choice = inputInt("Enter your choice: ");
             switch (choice) {
                 case 1:
                     choice = firstCourse(choice);
@@ -304,28 +296,10 @@ public class Main {
                     change(5);
                     break;
             }
+        }while (choice!=6);
 
-            if(choice!=6) {
-                System.out.println("\n1.) First course\n2.) Main course\n3.) Dessert\n4.) Total\n5.) Change menu\n6.) Exit");
-                choice = inputInt("\nEnter your choice: ");
-            }
-        }
+        checkOrder();
 
-        if(((quanCreamyTS*priceCreamyTS)+(quanSaladC*priceSaladC)+(quanCrispyFishF *200)+(quanSpanishO *250)+(quanChocoC *65)+(quanTropicalF *40))>0) {
-
-            if(((quanCreamyTS*priceCreamyTS)+(quanSaladC*90)+(quanCrispyFishF *200)+(quanSpanishO *250)+(quanChocoC *65)+(quanTropicalF *40))>=2500){
-                System.out.println("Your orders are more than 2500 Baht. : 10% discount");
-                discount-=10;
-                total(5);
-            }
-            else {
-                total(5);
-            }
-            money();
-        }
-        else {
-            total(5);
-        }
         System.out.println("========================= THANK YOU =========================");
     }
 }
