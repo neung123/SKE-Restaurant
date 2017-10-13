@@ -3,9 +3,6 @@ import java.util.Scanner;
 public class SkeRestaurant {
 
     private static Scanner scan = new Scanner(System.in);
-    private static final String[] menuItems = {"Creamy tomato soup", "Salad with corn","Crispy fish fillets", "Spanish octopus","Chocolate custard", "Tropical fruit"};
-    private static final double[] unitPrice = {120.0, 90.0,200.0, 250.0,65.0, 40.0};
-    private static int[] quantity = {0,0,0,0,0,0};
     private static int discount = 100;
     public static double realPrice;
 
@@ -29,21 +26,21 @@ public class SkeRestaurant {
     }
 
     private static void printEach(){
-        for(int k = 0; k < quantity.length ; k++){
-            if (quantity[k]>0){System.out.printf("| %-21.20s | %10d | %12.2f Baht. |\n", menuItems[k],quantity[k],quantity[k]* unitPrice[0]); }
+        for(int k = 0; k < RestaurantManager.quantity.size() ; k++){
+            if (RestaurantManager.quantity.get(k)>0){System.out.printf("| %-21.20s | %10d | %12.2f Baht. |\n", RestaurantManager.menuList.get(k),RestaurantManager.quantity.get(k),RestaurantManager.quantity.get(k)* RestaurantManager.unitPrice.get(k)); }
         }
     }
 
     private static double total() {
         double all = 0.0;
-        for(int k = 0; k < quantity.length; k++){ all += quantity[k]*unitPrice[k];}
+        for(int k = 0; k < RestaurantManager.quantity.size(); k++){ all += RestaurantManager.quantity.get(k)*RestaurantManager.unitPrice.get(k);}
         realPrice = all;
         return all;
     }
 
     private static boolean checkQuantity(){
         int countQuan = 0;
-        for(int k = 0; k < quantity.length ; k++) countQuan += quantity[k];
+        for(int k = 0; k < RestaurantManager.quantity.size() ; k++) countQuan += RestaurantManager.quantity.get(k);
 
         if (countQuan==0){ return true; }
         else { return false; }
@@ -69,16 +66,16 @@ public class SkeRestaurant {
             System.out.println("Sorry, You didn't order yet.");
         }
         else {
-            for(int k = 0; k < quantity.length ; k++){
-                if (quantity[k]>0){System.out.printf("\n[%d] %-20.20s",k+1,menuItems[k]);}
+            for(int k = 0; k < RestaurantManager.quantity.size() ; k++){
+                if (RestaurantManager.quantity.get(k)>0){System.out.printf("\n[%d] %-20.20s",k+1,RestaurantManager.menuList.get(k));}
             }
             String change = UserInput("\nWhat menu do to want to Change? : ");
             int numChange = Math.abs(Integer.parseInt(UserInput("Remove: ")));
-            quantity[Integer.parseInt(change) - 1] -= numChange;
+            RestaurantManager.quantity.set(Integer.parseInt(change) - 1,RestaurantManager.quantity.get(Integer.parseInt(change) - 1)- numChange);
 
             /** change quantity to 0 if it's a negative number **/
-            for(int k = 0; k < quantity.length ; k++){
-                if(quantity[k]<0){quantity[k]=0;}
+            for(int k = 0; k < RestaurantManager.quantity.size() ; k++){
+                if(RestaurantManager.quantity.get(k)<0){RestaurantManager.quantity.set(k,0);}
             }
         }
     }
@@ -93,13 +90,13 @@ public class SkeRestaurant {
             do {
                 choice = UserInput("\nEnter your choice: ");
                 if (isNumber(choice)) {
-                    if(Integer.parseInt(choice) <= menuItems.length ) {
+                    if(Integer.parseInt(choice) <= RestaurantManager.menuList.size()) {
                         quan = UserInput("Enter Quantity: ");
                         if (Integer.parseInt(quan) < 0) { quan = "0"; }
-                        quantity[Integer.parseInt(choice) - 1] += Integer.parseInt(quan);
+                        RestaurantManager.quantity.set(Integer.parseInt(choice) - 1, RestaurantManager.quantity.get(Integer.parseInt(choice) - 1)+ Integer.parseInt(quan));
                     }
                     else {
-                        System.out.printf("Sorry,but our restaurant have %d menus\n",menuItems.length);
+                        System.out.printf("Sorry,but our restaurant have %d menus\n",RestaurantManager.menuList.size());
                     }
                 } else {
                     if(choice.equalsIgnoreCase("t")){PrintTotal();}
@@ -127,7 +124,9 @@ public class SkeRestaurant {
 
         System.out.println("========= WELCOME TO SKE RESTAURANT =========");
 
-        for(int k = 0; k < quantity.length ; k++)System.out.printf("\n[%d] %-20.20s  %6.2f Baht.",k+1,menuItems[k], unitPrice[k]);
+        RestaurantManager.addMenu();
+
+        for(int k = 0; k < RestaurantManager.menuList.size() ; k++)System.out.printf("\n[%d] %-20.20s  %6.2f Baht.",k+1,RestaurantManager.menuList.get(k), RestaurantManager.unitPrice.get(k));
         System.out.println("\n\n[t] Total\n[c] Change menu\n[x] Exit");
 
         order();
