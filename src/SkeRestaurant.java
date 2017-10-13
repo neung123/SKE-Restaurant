@@ -90,7 +90,7 @@ public class SkeRestaurant {
             do {
                 choice = UserInput("\nEnter your choice: ");
                 if (isNumber(choice)) {
-                    if(Integer.parseInt(choice) <= RestaurantManager.menuList.size()) {
+                    if(Integer.parseInt(choice) <= RestaurantManager.menuList.size() && Integer.parseInt(choice) > 0) {
                         quan = UserInput("Enter Quantity: ");
                         if (Integer.parseInt(quan) < 0) { quan = "0"; }
                         RestaurantManager.quantity.set(Integer.parseInt(choice) - 1, RestaurantManager.quantity.get(Integer.parseInt(choice) - 1)+ Integer.parseInt(quan));
@@ -100,7 +100,11 @@ public class SkeRestaurant {
                     }
                 } else {
                     if(choice.equalsIgnoreCase("t")){PrintTotal();}
-                    if(choice.equalsIgnoreCase("c")){change();}
+                    else if(choice.equalsIgnoreCase("c")){change();}
+                    else if(choice.equals("?")){allChoice();}
+                    else{
+                        System.out.println("Enter ? for help");
+                    }
                 }
             }while (!choice.equalsIgnoreCase("x"));
         }
@@ -119,6 +123,10 @@ public class SkeRestaurant {
             return false;
         }
     }
+    private static void allChoice(){
+        for(int k = 0; k < RestaurantManager.menuList.size() ; k++)System.out.printf("\n[%d] %-20.20s  %6.2f Baht.",k+1,RestaurantManager.menuList.get(k), RestaurantManager.unitPrice.get(k));
+        System.out.println("\n\n[t] Total\n[c] Change menu\n[x] Exit");
+    }
 
     public static void main(String[] args) {
 
@@ -126,8 +134,7 @@ public class SkeRestaurant {
 
         RestaurantManager.addMenu();
 
-        for(int k = 0; k < RestaurantManager.menuList.size() ; k++)System.out.printf("\n[%d] %-20.20s  %6.2f Baht.",k+1,RestaurantManager.menuList.get(k), RestaurantManager.unitPrice.get(k));
-        System.out.println("\n\n[t] Total\n[c] Change menu\n[x] Exit");
+        allChoice();
 
         order();
         PrintTotal();

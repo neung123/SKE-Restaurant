@@ -1,3 +1,5 @@
+## add menu by using this text
+## menu;number(with .0);
 Creamy tomato soup;120.0;
 Salad with corn;90.0;
 Crispy fish fillets;200.0;
