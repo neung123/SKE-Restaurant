@@ -4,7 +4,6 @@ public class SkeRestaurant {
 
     private static Scanner scan = new Scanner(System.in);
     private static final String[] menuItems = {"Creamy tomato soup", "Salad with corn","Crispy fish fillets", "Spanish octopus","Chocolate custard", "Tropical fruit"};
-    private static final String[] menuItemsShort = {"CT", "SC","CF", "SO","CC", "TF"};
     private static final double[] unitPrice = {120.0, 90.0,200.0, 250.0,65.0, 40.0};
     private static int[] quantity = {0,0,0,0,0,0};
     private static int discount = 100;
@@ -62,7 +61,6 @@ public class SkeRestaurant {
     }
 
     /** change() ===> change quantity
-     * work with capital letter and small letter
      * if you put a negative number this method will minus the quantity anyway**/
 
     private static void change(){
@@ -72,34 +70,11 @@ public class SkeRestaurant {
         }
         else {
             for(int k = 0; k < quantity.length ; k++){
-                if (quantity[k]>0){System.out.printf("- %-21.20s (%s)\n",menuItems[k],menuItemsShort[k]); }
+                if (quantity[k]>0){System.out.printf("\n[%d] %-20.20s",k+1,menuItems[k]);}
             }
-
-            System.out.print("What menu do to want to Change? : ");
-            String change0 = scan.next();
-            String change = change0.toLowerCase();
-            int numChange = Math.abs(inputInt("Remove: "));
-
-            switch (change){
-                case "ct":
-                    quantity[0] -= numChange;
-                    break;
-                case "sc":
-                    quantity[1] -= numChange;
-                    break;
-                case "cf":
-                    quantity[2] -= numChange;
-                    break;
-                case "so":
-                    quantity[3] -= numChange;
-                    break;
-                case "cc":
-                    quantity[4] -= numChange;
-                    break;
-                case "tf":
-                    quantity[5] -= numChange;
-                    break;
-            }
+            String change = UserInput("\nWhat menu do to want to Change? : ");
+            int numChange = Math.abs(Integer.parseInt(UserInput("Remove: ")));
+            quantity[Integer.parseInt(change) - 1] -= numChange;
 
             /** change quantity to 0 if it's a negative number **/
             for(int k = 0; k < quantity.length ; k++){
@@ -108,56 +83,52 @@ public class SkeRestaurant {
         }
     }
 
+    /** order() is the main method
+     * to order menu,print receipt and exit
+     * choice t,c and x
+     * work with small and capital letter
+     **/
     private static void order(){
-        int choice = 0,quan = 0;
+        String choice,quan;
+            do {
+                choice = UserInput("\nEnter your choice: ");
+                if (isNumber(choice)) {
+                    if(Integer.parseInt(choice) <= menuItems.length ) {
+                        quan = UserInput("Enter Quantity: ");
+                        if (Integer.parseInt(quan) < 0) { quan = "0"; }
+                        quantity[Integer.parseInt(choice) - 1] += Integer.parseInt(quan);
+                    }
+                    else {
+                        System.out.printf("Sorry,but our restaurant have %d menus\n",menuItems.length);
+                    }
+                } else {
+                    if(choice.equalsIgnoreCase("t")){PrintTotal();}
+                    if(choice.equalsIgnoreCase("c")){change();}
+                }
+            }while (!choice.equalsIgnoreCase("x"));
+        }
 
-        do{
-            choice = inputInt("\nEnter your choice: ");
-            if(choice>=1 &&  choice<=6) {
-                quan = inputInt("Enter Quantity: ");
-                if(quan<0){quan=0;}
-            }
-            switch (choice) {
-                case 1:
-                    quantity[0] += quan;
-                    break;
-                case 2:
-                    quantity[1] += quan;
-                    break;
-                case 3:
-                    quantity[2] += quan;
-                    break;
-                case 4:
-                    quantity[3] += quan;
-                    break;
-                case 5:
-                    quantity[4] += quan;
-                    break;
-                case 6:
-                    quantity[5] += quan;
-                    break;
 
-                case 7:
-                    PrintTotal();
-                    break;
-                case 8:
-                    change();
-                    break;
-            }
-        }while (choice!=9);
+    private static String UserInput(String statement){
+        System.out.print(statement);
+        return scan.next();
     }
 
-    private static int inputInt(String statement){
-        System.out.print(statement);
-        return scan.nextInt();
+    private static boolean isNumber(String word) {
+        try {
+            Integer.parseInt(word);
+            return true;
+        } catch(NumberFormatException ex) {
+            return false;
+        }
     }
 
     public static void main(String[] args) {
 
         System.out.println("========= WELCOME TO SKE RESTAURANT =========");
 
-        for(int k = 0; k < quantity.length ; k++)System.out.printf("\n%d.) %-20.20s  %6.2f Baht.",k+1,menuItems[k], unitPrice[k]);
-        System.out.println("\n7.) Total\n8.) Change menu\n9.) Exit");
+        for(int k = 0; k < quantity.length ; k++)System.out.printf("\n[%d] %-20.20s  %6.2f Baht.",k+1,menuItems[k], unitPrice[k]);
+        System.out.println("\n\n[t] Total\n[c] Change menu\n[x] Exit");
 
         order();
         PrintTotal();
