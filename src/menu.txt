@@ -1,8 +1,10 @@
 ## add menu by using this text
-## menu;number(with .0);
-Creamy tomato soup;120.0;
-Salad with corn;90.0;
-Crispy fish fillets;200.0;
-Spanish octopus;250.0;
-Chocolate custard;65.0;
-Tropical fruit;40.0;
+## menu;number;
+######################
+#Halloween Theme!
+Poison Apple;75;
+Zombie Brain;90;
+Snake Cake;100;
+Jello Heart;150;
+Leg O'Man;180;
+Human Ribs;270;

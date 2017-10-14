@@ -112,7 +112,7 @@ public class SkeRestaurant {
 
     private static String UserInput(String statement){
         System.out.print(statement);
-        return scan.next();
+        return scan.nextLine();
     }
 
     private static boolean isNumber(String word) {
