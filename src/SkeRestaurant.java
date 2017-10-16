@@ -92,7 +92,13 @@ public class SkeRestaurant {
                 if (isNumber(choice)) {
                     if(Integer.parseInt(choice) <= RestaurantManager.menuList.size() && Integer.parseInt(choice) > 0) {
                         quan = UserInput("Enter Quantity: ");
-                        if (Integer.parseInt(quan) < 0) { quan = "0"; }
+                        while (!isNumber(quan)){
+                            System.out.println("\nInput invalid");
+                            quan = UserInput("Enter Quantity: ");
+                        }
+                        if (Integer.parseInt(quan) < 0) {
+                            quan = "0";
+                        }
                         RestaurantManager.quantity.set(Integer.parseInt(choice) - 1, RestaurantManager.quantity.get(Integer.parseInt(choice) - 1)+ Integer.parseInt(quan));
                     }
                     else {
