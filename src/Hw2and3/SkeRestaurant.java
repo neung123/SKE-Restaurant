@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class SkeRestaurant {
 
-   public static Scanner scan = new Scanner(System.in);
+    public static Scanner scan = new Scanner(System.in);
     private static int[] quantity;
     private static double[] prices;
     private static String[] items;
@@ -26,9 +26,8 @@ public class SkeRestaurant {
         for(int k = 0; k < quantity.length ; k++){
             if (quantity[k]>0){System.out.printf("%-21.20s  %10d  %12.2f Baht.\n", items[k],quantity[k],quantity[k]* prices[k]); }
         }
-        double total = 0.0;
-        for(int k = 0; k < quantity.length; k++){ total += quantity[k]*prices[k];}
-        System.out.printf("\nTotal: %.2f Baht.\n",total);
+
+        System.out.printf("\nTotal: %.2f Baht.\n",getTotal());
 
 
     }
@@ -52,7 +51,7 @@ public class SkeRestaurant {
 
         String change = UserInput("\nWhat menu do to want to Change? : ");
         String numChange = UserInput("Remove: ");
-            if (isNumber(change) && isNumber(numChange) && Integer.parseInt(change) < items.length) {
+            if (isNumber(change) && isNumber(numChange) && Integer.parseInt(change) <= items.length && Integer.parseInt(change) > 0 ) {
                 quantity[Integer.parseInt(change) - 1] = Math.max(quantity[Integer.parseInt(change) - 1] - Integer.parseInt(numChange), 0);
             } else System.out.println("Invalid input");
 
@@ -112,6 +111,11 @@ public class SkeRestaurant {
             return false;
         }
     }
+
+    /**
+     * check out method
+     * for record old order and prepare for new order
+     */
     private static void checkOut(){
         print();
         System.out.println("Thank you for purchasing");
@@ -126,14 +130,17 @@ public class SkeRestaurant {
             }
         }
 
-        double total = 0.0;
-        for(int k = 0; k < quantity.length; k++){ total += quantity[k]*prices[k];}
-
-        rm.recordOrder(item,quan,total);
+        rm.recordOrder(item,quan,getTotal());
 
         //delete the old order
         quantity = new int[quantity.length];
 
+    }
+
+    private static double getTotal(){
+        double total = 0.0;
+        for(int k = 0; k < quantity.length; k++){ total += quantity[k]*prices[k];}
+        return total;
     }
 
     private static void allChoice(){
@@ -146,9 +153,9 @@ public class SkeRestaurant {
 
         rm.init();
 
-        quantity = new int[rm.unitPrice.length];
         items = rm.getMenuItems();
         prices = rm.getPrices();
+        quantity = new int[items.length];
 
         allChoice();
         order();

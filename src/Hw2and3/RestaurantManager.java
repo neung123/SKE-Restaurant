@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- *  Reading menufile
+ * The Restaurant Manager
+ * It can retrieves the menu and prices from the file
+ * It records the orders for the chef
  *
  * @author Pornpavee Seri-umnuoy
  *
@@ -16,11 +18,11 @@ import java.util.Scanner;
 
 public class RestaurantManager {
 
-    public String[] menuList;
-    public double[] unitPrice;
-    public int orderNumber = 0;
-    public DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss\n");
-    public Date date = new Date();
+    private String[] menuList;
+    private double[] unitPrice;
+    private int orderNumber = 0; //for store old order's number in order.txt
+    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss\n");
+    private Date date = new Date();
 
 
     public void init() {

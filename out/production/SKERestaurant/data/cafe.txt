@@ -1,0 +1,7 @@
+## add menu by using this text
+## menu;number;
+######################
+Pure water;15
+Americano;40
+Mocha;45
+Latte;50

@@ -1,31 +1,7 @@
-RECORD ORDERED
 
 #00001
-11/11/2560 22:40:38
-Creamy tomato soup   1
-Salad with corn      1
+14/11/2560 22:26:55
+Creamy tomato soup   4
 
-Total: 210.00
---------------------------
-#00002
-11/11/2560 22:40:38
-Salad with corn      4
-
-Total: 360.00
---------------------------
-#00003
-11/11/2560 22:41:09
-Crispy fish fillets  2
-Spanish octopus      1
-Chocolate custard    1
-Tropical fruit       1
-
-Total: 755.00
---------------------------
-#00004
-11/11/2560 23:00:33
-Creamy tomato soup   3
-Salad with corn      1
-
-Total: 450.00
+Total: 480.00
 --------------------------
