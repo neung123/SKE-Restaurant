@@ -1,5 +1,3 @@
-package Hw2and3;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 

@@ -1,5 +1,3 @@
-package Hw2and3;
-
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -102,7 +100,7 @@ public class RestaurantManager {
     public void recordOrder(ArrayList<String> item,ArrayList<Integer> quantity,double total){
 
         try {
-            File file = new File("src/data/order.txt");
+            File file = new File("data/order.txt");
             FileWriter fw = new FileWriter(file,true);
             runOrderNumber();
             fw.write(String.format("\n#%05d\n",orderNumber));
