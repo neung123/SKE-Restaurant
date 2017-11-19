@@ -1,8 +1,0 @@
-
-#00001
-19/11/2560 13:00:45
-Creamy tomato soup   4
-Chocolate custard    1
-
-Total: 545.00
---------------------------
