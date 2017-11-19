@@ -1,36 +1,8 @@
 
-#00006
-19/11/2560 00:36:10
-Creamy tomato soup   4
-
-Total: 480.00
---------------------------
 #00001
-19/11/2560 00:39:07
+19/11/2560 13:00:45
 Creamy tomato soup   4
-Chocolate custard    2
-
-Total: 610.00
---------------------------
-#00000
-19/11/2560 00:40:46
-Spanish octopus      2
-
-Total: 500.00
---------------------------
-#00000
-
-#00002
-19/11/2560 00:44:01
-Creamy tomato soup   4
-
-Total: 480.00
---------------------------ffffffffffffffffffffffffff7
-
-#00002
-19/11/2560 12:51:16
-Spanish octopus      2
 Chocolate custard    1
 
-Total: 565.00
+Total: 545.00
 --------------------------
