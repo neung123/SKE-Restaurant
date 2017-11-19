@@ -18,19 +18,20 @@ public class RestaurantManager {
 
     private String[] menuList;
     private double[] unitPrice;
+    public final String ORDERS_FILE = "data/orders.txt";
+    public final String MENU_FILE = "data/menu.txt";
     private int orderNumber = 0; //for store old order's number in order.txt
-    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss\n");
+    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private Date date = new Date();
 
 
     public void init() {
 
-        String file = "data/menu.txt";
         ClassLoader loader = RestaurantManager.class.getClassLoader();
-        InputStream text = loader.getResourceAsStream(file);
+        InputStream text = loader.getResourceAsStream(MENU_FILE);
 
         if (text == null) {
-            System.out.println("Could not access file "+file);
+            System.out.println("Could not access file " + MENU_FILE);
             return;
         }
 
@@ -50,7 +51,7 @@ public class RestaurantManager {
                 try {
                     menuPrice = Double.parseDouble(item[1]);
                 }catch (NumberFormatException ex){
-                    System.out.printf("%s error:%d",file,countLine);
+                    System.out.printf("%s error:%d",MENU_FILE,countLine);
                     return;
                 }
 
@@ -99,29 +100,39 @@ public class RestaurantManager {
      */
     public void recordOrder(ArrayList<String> item,ArrayList<Integer> quantity,double total){
 
+        File file = new File(ORDERS_FILE);
+        String pathname = file.getParent();
+        if (! pathname.isEmpty() ) {
+            File parent = new File(pathname);
+            parent.mkdirs();
+        }
+
+        boolean append = file.exists();
+        FileOutputStream out = null;
+
         try {
-            File file = new File("data/order.txt");
-            FileWriter fw = new FileWriter(file,true);
-            runOrderNumber();
-            fw.write(String.format("\n#%05d\n",orderNumber));
-            fw.write(dateFormat.format(date));
-           for(int i = 0; i < item.size(); i++)fw.write(String.format("%-20s %d\n",item.get(i),quantity.get(i)));
-
-            fw.write(String.format("\nTotal: %.2f\n",total));
-
-            fw.write("--------------------------");
-
-            fw.close();
-        }catch (IOException e){
+            out = new FileOutputStream(file, append);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        PrintStream pout = new PrintStream(out);
+        runOrderNumber();
+        pout.printf("\n#%05d\n",orderNumber);
+        pout.println(dateFormat.format(date));
+        for(int i = 0; i < item.size(); i++) pout.printf("%-20s %d\n",item.get(i),quantity.get(i));
+        pout.printf("\nTotal: %.2f\n",total);
+        pout.println("--------------------------");
+
+        pout.close();
+
+
     }
 
     public void runOrderNumber(){
 
-        String file = "data/order.txt";
         ClassLoader loader = RestaurantManager.class.getClassLoader();
-        InputStream text = loader.getResourceAsStream(file);
+        InputStream text = loader.getResourceAsStream(ORDERS_FILE);
 
         Scanner reader = new Scanner(text);
 
